@@ -1,0 +1,2 @@
+# scuola-sci-fondo-livigno
+
