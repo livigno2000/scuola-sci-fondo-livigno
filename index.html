@@ -664,11 +664,11 @@
   /* ── FOOTER ── */
   /* PARTNER */
   #partner {
-    background: #0D0D0D;
+    background: #ffffff;
     padding: 56px 40px;
     position: relative;
     z-index: 2;
-    border-top: 1px solid #1a1a1a;
+    border-top: 1px solid #e0e0e0;
   }
   .partner-label {
     font-family: 'Inter', sans-serif;
@@ -676,7 +676,7 @@
     font-weight: 600;
     letter-spacing: .2em;
     text-transform: uppercase;
-    color: #555;
+    color: #999;
     text-align: center;
     margin-bottom: 36px;
   }
@@ -695,34 +695,32 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    opacity: .55;
+    opacity: .7;
     transition: opacity .25s;
     text-decoration: none;
   }
   .partner-item:hover { opacity: 1; }
   .partner-logo-wrap {
-    height: 40px;
+    width: 120px;
+    height: 120px;
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 16px;
+    background: #f4f4f4;
   }
   .partner-item img {
-    height: 40px;
-    width: auto;
-    max-width: 140px;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
-  }
-  .partner-placeholder {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: #333;
   }
   .partner-item-text {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     letter-spacing: .1em;
-    color: var(--white);
+    color: #0D0D0D;
   }
   @media (max-width: 768px) {
     #partner { padding: 40px 24px; }
@@ -1193,7 +1191,7 @@
         <p style="color:var(--gray);font-size:.9rem;line-height:1.7;margin-bottom:32px" data-i18n="noleggi.desc">Il noleggio non è incluso nelle lezioni. Consigliamo i nostri partner convenzionati, entrambi nelle vicinanze della scuola.</p>
         <div style="display:flex;flex-direction:column;gap:12px">
           <a href="https://www.lapponiasport.com" target="_blank" style="display:flex;align-items:center;gap:16px;padding:14px 20px;background:#1a1a1a;border:1.5px solid #2a2a2a;border-radius:3px;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='#FFC400'" onmouseout="this.style.borderColor='#2a2a2a'">
-            <img src="img/pista_noleggi/Lapponia.png" alt="Lapponia Sport" style="height:32px;width:auto;object-fit:contain;flex-shrink:0">
+            <img src="img/pista_noleggi/Lapponia.png" alt="Lapponia Sport" style="height:40px;width:56px;object-fit:contain;flex-shrink:0">
             <div>
               <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--white);letter-spacing:.05em">Lapponia Sport</div>
               <div style="font-size:.72rem;color:var(--gray);margin-top:1px">lapponiasport.com</div>
@@ -1201,7 +1199,7 @@
             <span style="color:var(--gold);font-size:1rem;margin-left:auto">↗</span>
           </a>
           <a href="https://www.silenesport.it" target="_blank" style="display:flex;align-items:center;gap:16px;padding:14px 20px;background:#1a1a1a;border:1.5px solid #2a2a2a;border-radius:3px;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='#FFC400'" onmouseout="this.style.borderColor='#2a2a2a'">
-            <img src="img/pista_noleggi/silene.png" alt="Silene Sport" style="height:32px;width:auto;object-fit:contain;flex-shrink:0">
+            <img src="img/pista_noleggi/silene.png" alt="Silene Sport" style="height:40px;width:56px;object-fit:contain;flex-shrink:0">
             <div>
               <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--white);letter-spacing:.05em">Silene Sport</div>
               <div style="font-size:.72rem;color:var(--gray);margin-top:1px">silenesport.it</div>
@@ -1439,8 +1437,8 @@
       <div class="partner-logo-wrap"><img src="img/partner/tipo_caffè.png" alt="Tipo Caffè"></div>
       <span class="partner-item-text">Tipo Caffè</span>
     </a>
-    <a class="partner-item" href="https://www.instagram.com/parafarmacia_faifer_livigno/" target="_blank" rel="noopener" aria-label="Parafarmacia Faifer">
-      <div class="partner-logo-wrap"><div class="partner-placeholder"></div></div>
+    <a class="partner-item" href="#" target="_blank" rel="noopener" aria-label="Parafarmacia Faifer">
+      <div class="partner-logo-wrap"><img src="img/partner/parafarmacia.png" alt="Parafarmacia Faifer"></div>
       <span class="partner-item-text">Parafarmacia Faifer</span>
     </a>
   </div>
