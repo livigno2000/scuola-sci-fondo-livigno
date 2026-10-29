@@ -2049,11 +2049,6 @@ document.addEventListener('DOMContentLoaded', () => {
       a.style.color = '';
     });
 
-    // Logo img filter: none → invert to white
-    const logoImg = nav.querySelector('.nav-logo img');
-    if (logoImg) {
-      logoImg.style.filter = 'brightness(0) invert(1)'; // sempre bianco
-    }
 
     nav.classList.toggle('scrolled', progress > 0.5);
   }
