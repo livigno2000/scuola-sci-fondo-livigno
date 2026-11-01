@@ -57,8 +57,16 @@
   }
   nav.scrolled {
     background: rgba(13,13,13,.95);
-    backdrop-filter: blur(8px);
     box-shadow: 0 1px 0 rgba(255,196,0,.15);
+  }
+  /* backdrop-filter su pseudo-elemento: Safari campiona il background della nav senza essere bloccato dal blur */
+  nav.scrolled::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: -1;
   }
   nav.scrolled .nav-logo img {
     filter: none;
