@@ -34,9 +34,13 @@
   }
   body {
     font-family: 'Inter', sans-serif;
-    background: var(--white);
+    background: #0D0D0D;
     color: var(--black);
     overflow-x: hidden;
+  }
+  /* Sezioni chiare hanno sfondo bianco esplicito */
+  #lezioni, #pista, #maestri, #contatti, footer {
+    background: var(--white);
   }
 
   /* ── NAV ── */
@@ -192,6 +196,20 @@
     background-size: cover;
     background-position: center;
     opacity: 1;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+  /* overlay nero per transizione scroll */
+  .hero-bg-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: #0D0D0D;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    transition: none;
   }
   .hero-content {
     position: relative;
@@ -297,6 +315,7 @@
     z-index: 2;
     padding: var(--section-pad);
     background: transparent;
+    margin-top: 0;
   }
   .section-label {
     font-size: .7rem;
@@ -1084,6 +1103,7 @@
 <!-- HERO -->
 <section id="hero">
   <div class="hero-bg"></div>
+  <div class="hero-bg-overlay" id="heroDark"></div>
   <div class="hero-content">
     <p class="hero-eyebrow" data-d="eyebrow">Livigno · Nordic Ski School</p>
     <h1 class="hero-title" data-i18n="hero.title">LA MONTAGNA SI VIVE<br>IN <span>MOVIMENTO</span></h1>
@@ -2089,20 +2109,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const nav = document.getElementById('nav');
   const heroBg = document.querySelector('.hero-bg');
   function onScroll() {
-    const heroH = document.getElementById('hero').offsetHeight;
-    const progress = Math.min(1, window.scrollY / (heroH * 0.5));
+    const heroEl = document.getElementById('hero');
+    const heroH = heroEl.offsetHeight;
+    // Overlay: inizia al 40% dell'hero, completamente nero all'85% — prima del bordo
+    const start = heroH * 0.4;
+    const end = heroH * 0.85;
+    const progress = Math.min(1, Math.max(0, (window.scrollY - start) / (end - start)));
 
-    // Photo fade
-    heroBg.style.opacity = 1 - progress;
-
-    // Attivita section: fade in black bg as user scrolls into it
-    if (attivita) {
-      const rect = attivita.getBoundingClientRect();
-      const winH = window.innerHeight;
-      // 0 when top of section is at bottom of viewport, 1 when scrolled half section height
-      const sectionProgress = Math.min(1, Math.max(0, (winH - rect.top) / (winH * 0.6)));
-      attivita.style.background = `rgba(13,13,13,${sectionProgress.toFixed(3)})`;
-    }
+    // Overlay nero sull'hero
+    const heroDark = document.getElementById('heroDark');
+    if (heroDark) heroDark.style.opacity = progress;
 
     // Nav sempre trasparente — nessun background JS
 
@@ -2121,7 +2137,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // nav.classList.toggle('scrolled', progress > 0.5); // disabilitato
   }
-  const attivita = document.getElementById('attivita');
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
