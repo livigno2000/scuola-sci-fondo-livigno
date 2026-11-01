@@ -81,6 +81,7 @@
     display: flex;
     gap: 36px;
     list-style: none;
+    align-items: center;
   }
   .nav-links a {
     color: var(--white);
@@ -112,31 +113,31 @@
   .lang-item { list-style: none; }
   .lang-switcher { position: relative; }
   .lang-btn {
-    display: flex; align-items: center; gap: 6px;
-    background: none; border: 1px solid rgba(255,255,255,.25);
-    color: var(--white); border-radius: 3px;
-    padding: 5px 10px; font-size: .75rem; font-family: 'Inter', sans-serif;
-    letter-spacing: .1em; cursor: pointer; transition: border-color .2s;
+    display: flex; align-items: center; gap: 5px;
+    background: none; border: none;
+    color: var(--white); 
+    padding: 4px 2px; font-size: .8rem; font-family: 'Inter', sans-serif;
+    letter-spacing: .08em; font-weight: 500; cursor: pointer;
+    text-shadow: 0 1px 4px rgba(0,0,0,.8);
   }
-  .lang-btn:hover { border-color: var(--gold); color: var(--gold); }
-  .lang-btn svg { transition: transform .2s; }
+  .lang-btn svg { transition: transform .2s; opacity: .8; }
   .lang-switcher.open .lang-btn svg { transform: rotate(180deg); }
   .lang-dropdown {
-    display: none; position: absolute; top: calc(100% + 8px); right: 0;
-    background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 4px;
-    list-style: none; padding: 6px 0; min-width: 140px;
-    box-shadow: 0 8px 24px rgba(0,0,0,.5); z-index: 2000;
+    display: none; position: absolute; top: calc(100% + 4px); left: 50%; transform: translateX(-50%);
+    background: rgba(20,20,20,.95); border-radius: 6px;
+    list-style: none; padding: 4px 0; min-width: 52px;
+    box-shadow: 0 4px 16px rgba(0,0,0,.4); z-index: 2000;
   }
   .lang-switcher.open .lang-dropdown { display: block; }
   .lang-opt {
     display: block; width: 100%;
-    background: none; border: none; text-align: left;
-    color: var(--white); font-size: .8rem; font-family: 'Inter', sans-serif;
-    padding: 9px 16px; cursor: pointer; letter-spacing: .05em;
-    transition: background .15s, color .15s;
+    background: none; border: none; text-align: center;
+    color: #111; font-size: .8rem; font-family: 'Inter', sans-serif;
+    padding: 8px 12px; cursor: pointer; letter-spacing: .06em; font-weight: 500;
+    transition: color .15s;
   }
-  .lang-opt:hover { background: #2a2a2a; color: var(--gold); }
-  .lang-opt.active { color: var(--gold); }
+  .lang-opt:hover { color: var(--gold); }
+  .lang-opt.active { display: none; }
 
   .burger {
     display: none;
@@ -158,6 +159,7 @@
   .burger {
     filter: drop-shadow(0 0 6px rgba(0,0,0,.8));
   }
+
 
   /* ── HERO ── */
   #hero {
@@ -786,10 +788,22 @@
   }
 
   /* ── RESPONSIVE ── */
+  /* desktop: nascondi lang btn fixed */
+  @media (min-width: 769px) {
+    #langBtn { display: none !important; }
+    #langDropdown { display: none !important; }
+  }
+  /* mobile: nascondi lang switcher nella nav */
+  @media (max-width: 768px) {
+    #langNavDesktop { display: none !important; }
+    #langDropdownDesktop { display: none !important; }
+  }
+
   @media (max-width: 768px) {
     .nav-links { display: none; }
     .burger { display: flex; }
     nav { padding: 18px 24px; }
+
     .nav-links.open {
       display: flex;
       flex-direction: column;
@@ -803,9 +817,9 @@
     }
     .nav-links.open a { font-size: 1.4rem; }
     .lang-item { margin-top: 8px; }
-    .lang-btn { font-size: 1rem; padding: 10px 20px; }
+    .lang-btn { font-size: .85rem; }
     .lang-dropdown { position: static; box-shadow: none; background: transparent; border: none; padding: 8px 0 0; }
-    .lang-opt { font-size: 1rem; padding: 10px 20px; color: rgba(247,247,245,.7); }
+    .lang-opt { font-size: 1rem; padding: 10px 20px; color: #111; }
     .nav-close {
       position: absolute;
       top: 20px; right: 24px;
@@ -1054,6 +1068,16 @@
 </style>
 </head>
 <body>
+<!-- Lang switcher fisso in alto a destra -->
+<button class="lang-btn" id="langBtn" style="position:fixed;top:30px;right:64px;z-index:9999;background:none;border:none;color:white;font-size:.8rem;font-family:'Inter',sans-serif;font-weight:500;letter-spacing:.08em;cursor:pointer;text-shadow:0 1px 4px rgba(0,0,0,.8);padding:0;display:flex;align-items:center;gap:5px;">
+  <span id="langCurrent">IT</span>
+  <svg id="langArrow" width="10" height="6" viewBox="0 0 10 6" fill="none" style="transition:transform .2s;opacity:.8;"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+<ul id="langDropdown" style="position:fixed;display:none;background:#fff;border-radius:6px;list-style:none;padding:4px 0;min-width:52px;box-shadow:0 4px 16px rgba(0,0,0,.2);z-index:9999;margin:0;">
+  <li><button onclick="setLang('it')" class="lang-opt" data-lang="it">it</button></li>
+  <li><button onclick="setLang('en')" class="lang-opt" data-lang="en">en</button></li>
+  <li><button onclick="setLang('de')" class="lang-opt" data-lang="de">de</button></li>
+</ul>
 <!-- NAV -->
 <nav id="nav">
   <a class="nav-logo" href="#hero"><img src="img/logo_scuola/Icon_Logo-W.png" alt="Scuola Sci Fondo Livigno" style="height:56px;width:auto;display:block;"> <span class="nav-logo-text">Scuola Sci<br>Fondo Livigno</span></a>
@@ -1066,24 +1090,23 @@
     <li><a href="#dove" data-i18n="nav.contatti">Contatti</a></li>
     <li><a href="#faq">FAQ</a></li>
     <li><a href="#" data-d="prenota-link" target="_blank" class="nav-cta" data-i18n="nav.prenota">Prenota</a></li>
-    <li class="lang-item">
-      <div class="lang-switcher" id="langSwitcher">
-        <button class="lang-btn" id="langBtn">
-          <span id="langCurrent">IT</span>
-          <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <ul class="lang-dropdown" id="langDropdown">
-          <li><button onclick="setLang('it')" class="lang-opt" data-lang="it">🇮🇹 Italiano</button></li>
-          <li><button onclick="setLang('en')" class="lang-opt" data-lang="en">🇬🇧 English</button></li>
-          <li><button onclick="setLang('de')" class="lang-opt" data-lang="de">🇩🇪 Deutsch</button></li>
-        </ul>
-      </div>
+    <li id="langNavDesktop" style="display:flex;align-items:center;line-height:1;">
+      <button id="langBtnDesktop" style="background:none;border:none;color:white;font-size:.82rem;font-family:'Inter',sans-serif;font-weight:500;letter-spacing:.1em;text-transform:uppercase;opacity:.8;cursor:pointer;padding:0;display:flex;align-items:center;gap:5px;text-shadow:none;">
+        <span id="langCurrentDesktop">IT</span>
+        <svg id="langArrowDesktop" width="10" height="6" viewBox="0 0 10 6" fill="none" style="transition:transform .2s;opacity:.8;"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
     </li>
+
   </ul>
   <button class="burger" id="burger" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
+<ul id="langDropdownDesktop" style="position:fixed;display:none;background:#fff;border-radius:6px;list-style:none;padding:4px 0;min-width:52px;box-shadow:0 4px 16px rgba(0,0,0,.2);z-index:9999;margin:0;">
+  <li><button onclick="setLang('it')" class="lang-opt" data-lang="it">it</button></li>
+  <li><button onclick="setLang('en')" class="lang-opt" data-lang="en">en</button></li>
+  <li><button onclick="setLang('de')" class="lang-opt" data-lang="de">de</button></li>
+</ul>
 
 <!-- HERO -->
 <section id="hero">
@@ -1941,6 +1964,8 @@ function applyLang(lang) {
   // Aggiorna badge lingua
   const cur = document.getElementById('langCurrent');
   if (cur) cur.textContent = lang.toUpperCase();
+  const curD = document.getElementById('langCurrentDesktop');
+  if (curD) curD.textContent = lang.toUpperCase();
 
   // Evidenzia opzione attiva
   document.querySelectorAll('.lang-opt').forEach(btn => {
@@ -1956,8 +1981,10 @@ function applyLang(lang) {
 
 function setLang(lang) {
   applyLang(lang);
-  // Chiudi dropdown
-  document.getElementById('langSwitcher').classList.remove('open');
+  // Chiudi dropdown mobile
+  const dd = document.getElementById('langDropdown'); if (dd) dd.style.display = 'none'; const arr = document.getElementById('langArrow'); if(arr) arr.style.transform = '';
+  // Chiudi dropdown desktop
+  const ddD = document.getElementById('langDropdownDesktop'); if (ddD) ddD.style.display = 'none'; const arrD = document.getElementById('langArrowDesktop'); if(arrD) arrD.style.transform = '';
 }
 
 // Modal helpers
@@ -2068,20 +2095,59 @@ document.addEventListener('DOMContentLoaded', () => {
     set('[data-d="ciaspole-5h"]',    SITO.ciaspole.ore5);
   };
 
-  // Lang switcher — toggle dropdown
-  const langSwitcher = document.getElementById('langSwitcher');
+  // Lang switcher — toggle dropdown con position fixed
   const langBtn = document.getElementById('langBtn');
-  if (langBtn && langSwitcher) {
+  const langDropdown = document.getElementById('langDropdown');
+  if (langBtn && langDropdown) {
     langBtn.addEventListener('click', e => {
       e.stopPropagation();
-      langSwitcher.classList.toggle('open');
+      const isOpen = langDropdown.style.display === 'block';
+      if (!isOpen) {
+        const r = langBtn.getBoundingClientRect();
+        langDropdown.style.top = (r.bottom + 6) + 'px';
+        const cur = document.getElementById('langCurrent');
+        const cr = cur ? cur.getBoundingClientRect() : r;
+        langDropdown.style.left = (cr.left + cr.width / 2 - 26) + 'px';
+        langDropdown.style.display = 'block';
+        document.getElementById('langArrow').style.transform = 'rotate(180deg)';
+      } else {
+        langDropdown.style.display = 'none';
+        document.getElementById('langArrow').style.transform = '';
+      }
+    });
+  }
+
+  // Lang switcher DESKTOP
+  const langBtnDesktop = document.getElementById('langBtnDesktop');
+  const langDropdownDesktop = document.getElementById('langDropdownDesktop');
+  if (langBtnDesktop && langDropdownDesktop) {
+    langBtnDesktop.addEventListener('click', e => {
+      e.stopPropagation();
+      const isOpen = langDropdownDesktop.style.display === 'block';
+      if (!isOpen) {
+        const r = langBtnDesktop.getBoundingClientRect();
+        langDropdownDesktop.style.top = (r.bottom + 6) + 'px';
+        const cur = document.getElementById('langCurrentDesktop');
+        const cr = cur ? cur.getBoundingClientRect() : r;
+        langDropdownDesktop.style.left = (cr.left + cr.width / 2 - 26) + 'px';
+        langDropdownDesktop.style.display = 'block';
+        document.getElementById('langArrowDesktop').style.transform = 'rotate(180deg)';
+      } else {
+        langDropdownDesktop.style.display = 'none';
+        document.getElementById('langArrowDesktop').style.transform = '';
+      }
     });
   }
 
   // Click fuori → chiudi dropdown
   document.addEventListener('click', e => {
-    if (langSwitcher && !langSwitcher.contains(e.target)) {
-      langSwitcher.classList.remove('open');
+    if (langDropdown && !langDropdown.contains(e.target) && e.target !== langBtn) {
+      langDropdown.style.display = 'none';
+      const arr = document.getElementById('langArrow'); if(arr) arr.style.transform = '';
+    }
+    if (langDropdownDesktop && !langDropdownDesktop.contains(e.target) && e.target !== langBtnDesktop) {
+      langDropdownDesktop.style.display = 'none';
+      const arr = document.getElementById('langArrowDesktop'); if(arr) arr.style.transform = '';
     }
   });
 
@@ -2112,13 +2178,53 @@ document.addEventListener('DOMContentLoaded', () => {
       const navLinks = nav.querySelectorAll('.nav-links a');
       const logoText = nav.querySelector('.nav-logo-text');
       navLinks.forEach(a => a.style.color = onLight ? '#111' : '');
+      const lb = document.getElementById('langBtn');
+      if (lb) lb.style.color = onLight ? '#111' : '';
+      const lbD = document.getElementById('langBtnDesktop');
+      if (lbD) lbD.style.color = onLight ? '#111' : '';
       // logo text rimane sempre bianco
     }
     // nav.classList.toggle('scrolled', progress > 0.5); // disabilitato
   }
   const attivita = document.getElementById('attivita');
+  // Allinea lang btn verticalmente al burger
+  (function alignLang() {
+    const burger = document.getElementById('burger');
+    const lb = document.getElementById('langBtn');
+    if (!burger || !lb) return;
+    const r = burger.getBoundingClientRect();
+    lb.style.top = (r.top + r.height / 2 - 8) + 'px';
+  })();
+
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+  const burger = document.getElementById('burger');
+  const navLinks = document.getElementById('navLinks');
+  const navClose = document.getElementById('navClose');
+  const navParent = navLinks.parentNode; // salva posizione originale nel DOM
+
+  function openMenu() {
+    // Sposta navLinks fuori dalla nav → sfugge al suo stacking context
+    document.body.appendChild(navLinks);
+    navLinks.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu() {
+    navLinks.classList.remove('open');
+    document.body.style.overflow = '';
+    // Rimetti navLinks dentro la nav
+    navParent.appendChild(navLinks);
+    onScroll();
+  }
+  burger.addEventListener('click', () => {
+    if (navLinks.classList.contains('open')) closeMenu(); else openMenu();
+  });
+  navClose.addEventListener('click', closeMenu);
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', closeMenu);
+  });
+
+
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
