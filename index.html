@@ -314,8 +314,23 @@
     position: relative;
     z-index: 2;
     padding: var(--section-pad);
-    background: linear-gradient(to bottom, #1a1a1a 0%, #0D0D0D 300px);
+    background-image: url('img/hero.jpg');
+    background-size: cover;
+    background-position: center top;
+    background-attachment: scroll;
     margin-top: 0;
+  }
+  #attivita::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(13,13,13,0.75) 0%, #0D0D0D 60%);
+    z-index: 0;
+    pointer-events: none;
+  }
+  #attivita > * {
+    position: relative;
+    z-index: 1;
   }
   .section-label {
     font-size: .7rem;
