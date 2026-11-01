@@ -2183,7 +2183,7 @@ document.addEventListener('DOMContentLoaded', () => {
     var bar = document.getElementById('stickyBar');
     if (!bar) return;
     function showBar() {
-      if (window.scrollY > 40) {
+      if (window.scrollY > 5) {
         bar.classList.add('visible');
         window.removeEventListener('scroll', showBar);
       }
