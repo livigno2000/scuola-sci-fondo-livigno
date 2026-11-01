@@ -2178,18 +2178,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Sticky bar: appare al primo scroll
-  (function() {
+  // Sticky bar: appare dopo 1 secondo
+  setTimeout(function() {
     var bar = document.getElementById('stickyBar');
-    if (!bar) return;
-    function showBar() {
-      if (window.scrollY > 5) {
-        bar.classList.add('visible');
-        window.removeEventListener('scroll', showBar);
-      }
-    }
-    window.addEventListener('scroll', showBar, { passive: true });
-  })();
+    if (bar) bar.classList.add('visible');
+  }, 1000);
 </script>
 
 <!-- INFO MODAL -->
