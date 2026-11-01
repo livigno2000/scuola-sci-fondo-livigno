@@ -2094,63 +2094,34 @@ document.addEventListener('DOMContentLoaded', () => {
   const heroBg = document.querySelector('.hero-bg');
   function onScroll() {
 
-    // Nav sempre trasparente — nessun background JS
+    // Nav: testo nero su sezioni chiare (solo desktop)
+    if (window.innerWidth >= 768) {
+      const navBottom = nav.getBoundingClientRect().bottom;
+      const lightIds = ['lezioni','pista-noleggi','partner','dove'];
+      let onLight = false;
+      lightIds.forEach(id => {
+        const el = document.getElementById(id) || document.querySelector('[id="' + id + '"]') || document.querySelector('section[id="' + id + '"]');
+        if (!el) return;
+        const r = el.getBoundingClientRect();
+        if (r.top <= navBottom && r.bottom >= 0) onLight = true;
+      });
+      // Controlla anche footer
+      const ft = document.querySelector('footer');
+      if (ft) { const r = ft.getBoundingClientRect(); if (r.top <= navBottom && r.bottom >= 0) onLight = true; }
 
-    // Logo text: black → white
-    const logoText = nav.querySelector('.nav-logo-text');
-    if (logoText) {
-      logoText.style.color = 'rgb(247,247,245)'; // sempre bianco
+      const navLinks = nav.querySelectorAll('.nav-links a');
+      const logoText = nav.querySelector('.nav-logo-text');
+      navLinks.forEach(a => a.style.color = onLight ? '#111' : '');
+      // logo text rimane sempre bianco
     }
-
-    // Nav links stay white (CSS handles default), no override needed
-    // but reset any previous inline color so CSS white applies
-    nav.querySelectorAll('.nav-links a').forEach(a => {
-      a.style.color = '';
-    });
-
-
     // nav.classList.toggle('scrolled', progress > 0.5); // disabilitato
   }
   const attivita = document.getElementById('attivita');
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
-
-  // Burger menu
-  const burger = document.getElementById('burger');
-  const navLinks = document.getElementById('navLinks');
-  const navClose = document.getElementById('navClose');
-  const navParent = navLinks.parentNode; // salva posizione originale nel DOM
-
-  function openMenu() {
-    // Sposta navLinks fuori dalla nav → sfugge al suo stacking context
-    document.body.appendChild(navLinks);
-    navLinks.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeMenu() {
-    navLinks.classList.remove('open');
-    document.body.style.overflow = '';
-    // Rimetti navLinks dentro la nav
-    navParent.appendChild(navLinks);
-    onScroll();
-  }
-  burger.addEventListener('click', () => {
-    if (navLinks.classList.contains('open')) closeMenu(); else openMenu();
-  });
-  navClose.addEventListener('click', closeMenu);
-  navLinks.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', closeMenu);
-  });
-
-  // Reveal on scroll
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
-      }
-    });
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
   reveals.forEach(el => observer.observe(el));
 
