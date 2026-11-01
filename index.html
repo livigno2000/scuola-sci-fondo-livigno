@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0D0D0D">
 <title>Scuola Sci Fondo Livigno</title>
 <meta name="description" content="Sci di Fondo, Telemark, Ciaspolate e Laser Biathlon a Livigno. Maestri professionisti, lezioni private e collettive. Attiva da oltre 50 anni.">
@@ -47,7 +47,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 18px 40px;
+    padding: calc(18px + env(safe-area-inset-top)) 40px 18px;
     transition: background .6s ease, box-shadow .6s ease;
 
     background: transparent;
@@ -185,13 +185,12 @@
   }
   .hero-content { position: relative; z-index: 1; }
   .hero-bg {
-    position: fixed;
+    position: absolute;
     inset: 0;
     z-index: 0;
     background-image: url('img/hero.jpg');
     background-size: cover;
     background-position: center;
-    will-change: transform;
     opacity: 1;
   }
   .hero-content {
@@ -1051,9 +1050,6 @@
 </style>
 </head>
 <body>
-<!-- Safari status bar color fix: fixed element at top -->
-<div style="position:fixed;top:0;left:0;right:0;height:env(safe-area-inset-top,0px);background:#0D0D0D;z-index:9999;pointer-events:none;"></div>
-
 <!-- NAV -->
 <nav id="nav">
   <a class="nav-logo" href="#hero"><img src="img/logo_scuola/Icon_Logo-W.png" alt="Scuola Sci Fondo Livigno" style="height:56px;width:auto;display:block;"> <span class="nav-logo-text">Scuola Sci<br>Fondo Livigno</span></a>
