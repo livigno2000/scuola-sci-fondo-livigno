@@ -193,18 +193,6 @@
     background-position: center;
     opacity: 1;
   }
-  /* Gradiente bianco che sfuma la foto dal 60% verso il basso */
-  .hero-fade-white {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background: linear-gradient(to bottom,
-      transparent 45%,
-      rgba(255,255,255,0.6) 65%,
-      rgba(255,255,255,1) 85%
-    );
-    pointer-events: none;
-  }
   .hero-content {
     position: relative;
     z-index: 2;
@@ -221,7 +209,7 @@
   .hero-title {
     font-family: 'Bebas Neue', sans-serif;
     font-size: clamp(32px, 6.5vw, 110px);
-    color: var(--black);
+    color: var(--white);
     line-height: 1;
     letter-spacing: .02em;
     margin-bottom: 28px;
@@ -233,7 +221,7 @@
     font-size: clamp(1.3rem, 2.5vw, 2.2rem);
     font-weight: 700;
     font-style: normal;
-    color: var(--black);
+    color: var(--white);
     letter-spacing: .12em;
     text-transform: uppercase;
     margin-top: 4px;
@@ -246,7 +234,7 @@
     font-weight: 400;
   }
   .hero-sub {
-    color: rgba(0,0,0,.75);
+    color: rgba(247,247,245,.85);
     font-size: 1rem;
     font-weight: 300;
     max-width: 480px;
@@ -308,7 +296,7 @@
     position: relative;
     z-index: 2;
     padding: var(--section-pad);
-    background: var(--white);
+    background: transparent;
   }
   .section-label {
     font-size: .7rem;
@@ -1096,8 +1084,6 @@
 <!-- HERO -->
 <section id="hero">
   <div class="hero-bg"></div>
-  <div class="hero-fade-white"></div>
-  <div id="heroOverlay" style="position:absolute;inset:0;z-index:2;background:#0D0D0D;opacity:0;pointer-events:none;"></div>
   <div class="hero-content">
     <p class="hero-eyebrow" data-d="eyebrow">Livigno · Nordic Ski School</p>
     <h1 class="hero-title" data-i18n="hero.title">LA MONTAGNA SI VIVE<br>IN <span>MOVIMENTO</span></h1>
@@ -2104,33 +2090,37 @@ document.addEventListener('DOMContentLoaded', () => {
   const heroBg = document.querySelector('.hero-bg');
   function onScroll() {
     const heroH = document.getElementById('hero').offsetHeight;
-    const scrollY = window.scrollY;
+    const progress = Math.min(1, window.scrollY / (heroH * 0.5));
 
-    // Il fade al nero inizia al 70% dell'hero e finisce al 130% (metà attività)
-    const start = heroH * 0.10;
-    const end   = heroH * 0.90;
-    const progress = Math.min(1, Math.max(0, (scrollY - start) / (end - start)));
+    // Photo fade
+    heroBg.style.opacity = 1 - progress;
 
-    // Hero: overlay nero sopra la foto
-    if (heroOverlay) {
-      heroOverlay.style.opacity = progress;
-    }
-
-    // Attivita: stesso progress → da bianco a nero
+    // Attivita section: fade in black bg as user scrolls into it
     if (attivita) {
-      // interpola tra bianco (255,255,255) e nero (13,13,13)
-      const r = Math.round(255 + (13 - 255) * progress);
-      const g = Math.round(255 + (13 - 255) * progress);
-      const b = Math.round(255 + (13 - 255) * progress);
-      attivita.style.background = `rgb(${r},${g},${b})`;
+      const rect = attivita.getBoundingClientRect();
+      const winH = window.innerHeight;
+      // 0 when top of section is at bottom of viewport, 1 when scrolled half section height
+      const sectionProgress = Math.min(1, Math.max(0, (winH - rect.top) / (winH * 0.6)));
+      attivita.style.background = `rgba(13,13,13,${sectionProgress.toFixed(3)})`;
     }
 
-    // Nav logo sempre bianco
+    // Nav sempre trasparente — nessun background JS
+
+    // Logo text: black → white
     const logoText = nav.querySelector('.nav-logo-text');
-    if (logoText) logoText.style.color = 'rgb(247,247,245)';
-    nav.querySelectorAll('.nav-links a').forEach(a => { a.style.color = ''; });
+    if (logoText) {
+      logoText.style.color = 'rgb(247,247,245)'; // sempre bianco
+    }
+
+    // Nav links stay white (CSS handles default), no override needed
+    // but reset any previous inline color so CSS white applies
+    nav.querySelectorAll('.nav-links a').forEach(a => {
+      a.style.color = '';
+    });
+
+
+    // nav.classList.toggle('scrolled', progress > 0.5); // disabilitato
   }
-  const heroOverlay = document.getElementById('heroOverlay');
   const attivita = document.getElementById('attivita');
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
