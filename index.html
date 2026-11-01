@@ -34,10 +34,11 @@
   }
   body {
     font-family: 'Inter', sans-serif;
-    background: var(--white);
+    background: #0D0D0D;
     color: var(--black);
     overflow-x: hidden;
   }
+  #lezioni, #pista-noleggi, #maestri, #faq, #partner, #contatti, footer { background: var(--white); }
 
   /* ── NAV ── */
   nav {
@@ -299,7 +300,7 @@
     position: relative;
     z-index: 2;
     padding: var(--section-pad);
-    background: transparent;
+    background: #0D0D0D;
   }
   .section-label {
     font-size: .7rem;
@@ -2092,20 +2093,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const nav = document.getElementById('nav');
   const heroBg = document.querySelector('.hero-bg');
   function onScroll() {
-    const heroH = document.getElementById('hero').offsetHeight;
-    const progress = Math.min(1, window.scrollY / (heroH * 0.5));
-
-    // Photo fade
-    heroBg.style.opacity = 1 - progress;
-
-    // Attivita section: fade in black bg as user scrolls into it
-    if (attivita) {
-      const rect = attivita.getBoundingClientRect();
-      const winH = window.innerHeight;
-      // 0 when top of section is at bottom of viewport, 1 when scrolled half section height
-      const sectionProgress = Math.min(1, Math.max(0, (winH - rect.top) / (winH * 0.6)));
-      attivita.style.background = `rgba(13,13,13,${sectionProgress.toFixed(3)})`;
-    }
 
     // Nav sempre trasparente — nessun background JS
 
