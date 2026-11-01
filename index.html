@@ -30,7 +30,7 @@
   html { scroll-behavior: smooth; }
 
   html {
-    background: var(--black);
+    background: transparent;
   }
   body {
     font-family: 'Inter', sans-serif;
@@ -2112,8 +2112,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const heroEl = document.getElementById('hero');
     const heroH = heroEl.offsetHeight;
     // Overlay: inizia al 40% dell'hero, completamente nero all'85% — prima del bordo
-    const start = heroH * 0.4;
-    const end = heroH * 0.85;
+    const start = heroH * 0.3;
+    const end = heroH * 0.65;
     const progress = Math.min(1, Math.max(0, (window.scrollY - start) / (end - start)));
 
     // Overlay nero sull'hero
